@@ -1,0 +1,5 @@
+E:\Git\Gallery\ImageGallery\ImageGallery\bin\ImageGallery.dll
+E:\Git\Gallery\ImageGallery\ImageGallery\bin\ImageGallery.pdb
+E:\Git\Gallery\ImageGallery\ImageGallery\obj\Debug\ImageGallery.csprojResolveAssemblyReference.cache
+E:\Git\Gallery\ImageGallery\ImageGallery\obj\Debug\ImageGallery.dll
+E:\Git\Gallery\ImageGallery\ImageGallery\obj\Debug\ImageGallery.pdb
