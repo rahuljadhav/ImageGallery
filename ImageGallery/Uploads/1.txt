@@ -1,0 +1,165 @@
+window.onload
+{
+
+    var flag = 0,winflag=0;
+    var arr = new Array(3);
+    for (var iTmp = 0; iTmp < 3; iTmp++)
+        arr[iTmp] = new Array(3);
+    var games = new Array(5);
+    var gameNo = 0;
+    var count = 0;
+    function change(imgSrc, num1, num2) {
+       
+        var ans;
+        if (flag == 0 && imgSrc.innerHTML=="") {
+            imgSrc.innerHTML = "X";
+            arr[num1][num2] = "X";
+            flag = 1;
+        }
+        else if (flag == 1 && imgSrc.innerHTML=="" ) {
+            imgSrc.innerHTML = "O";
+            arr[num1][num2] = "O";
+            flag = 0;
+        }
+
+
+        for (var iTmp = 0; iTmp < 3; iTmp++) {
+            for (var jTmp = 0; jTmp < 1; jTmp++) {
+                if (arr[iTmp][jTmp] == "X" && arr[iTmp][jTmp + 1] == "X" && arr[iTmp][jTmp + 2] == "X") {
+                    winflag = 1;
+                    ans =  confirm("Winner:   X\n Do You want to continue?");
+                    break;
+                }
+                else if (arr[iTmp][jTmp] == "O" && arr[iTmp][jTmp + 1] == "O" && arr[iTmp][jTmp + 2] == "O") {
+                    winflag = 1;
+                    ans = confirm("Winner:   O\n Do You want to continue?");
+                    break;
+                }
+            }
+        }
+        for (var iTmp = 0; iTmp < 3; iTmp++) {
+            for (var jTmp = 0; jTmp < 1; jTmp++) {
+                if (arr[jTmp][iTmp] == "X" && arr[jTmp + 1][iTmp] == "X" && arr[jTmp + 2][iTmp] == "X") {
+                    winflag = 1;
+                    ans = confirm("Winner:   X\n Do You want to continue?");
+                    break;
+                }
+                else if (arr[jTmp][iTmp] == "O" && arr[jTmp + 1][iTmp] == "O" && arr[jTmp + 2][iTmp] == "O") {
+                    winflag = 1;
+                    ans = confirm("Winner:   O\n Do You want to continue?");
+                    break;
+                }
+            }
+        }
+        if ((arr[0][0] == "X" && arr[1][1] == "X" && arr[2][2] == "X") || (arr[0][2] == "X" && arr[1][1] == "X" && arr[2][0] == "X")) {
+            winflag = 1;
+            ans = confirm("Winner:   X\n Do You want to continue?");
+        }
+        else if ((arr[0][0] == "O" && arr[1][1] == "O" && arr[2][2] == "O") || (arr[0][2] == "O" && arr[1][1] == "O" && arr[2][0] == "O")) {
+            winflag = 1;
+            ans = confirm("Winner:   O\n Do You want to continue?");
+        }
+        var draw = 0;
+        var status = 0;
+        if (winflag != 1) {
+            for (var iTmp = 0; iTmp < 3; iTmp++) {
+                for (var jTmp = 0; jTmp < 3; jTmp++) {
+                    if (arr[iTmp][jTmp] == "X" || arr[iTmp][jTmp] == "O")
+                        draw++;
+                    else {
+                        status = 1;
+                        break;
+                    }
+
+                }
+                if (status == 1)
+                    break;
+            }
+        }
+        if (draw == 9 && status==0)
+            ans = confirm("Draw \n Do You want to continue?");
+
+        if (ans) {
+            games[gameNo++] = document.getElementById("ttt1").innerHTML;
+            count = gameNo;
+            document.getElementById("ttt1").innerHTML = '<div class="row1"><span class="block" id="block1" onclick="change(this,0,0)"></span><span class="block" id="block2" onclick="change(this,0,1)"></span><span class="block" id="block3" onclick="change(this,0,2)"></span> </div> <div class="row2"> <span class="block" id="block4" onclick="change(this,1,0)"></span> <span class="block" id="block5" onclick="change(this,1,1)"></span>  <span class="block" id="block6" onclick="change(this,1,2)"></span>  </div>   <div class="row3">   <span class="block" id="block7" onclick="change(this,2,0)"></span> <span class="block" id="block8" onclick="change(this,2,1)"></span>   <span class="block" id="block9" onclick="change(this,2,2)"></span> </div>';
+            document.getElementById("ttt1").style.visibility = 'visible';
+            flag = 0;
+            winflag = 0;
+            for (var iTmp = 0; iTmp < 3; iTmp++) {
+                for (var jTmp = 0; jTmp < 3; jTmp++) {
+                    arr[iTmp][jTmp] = 0;
+                } 
+            }
+
+        }
+      
+
+    }
+    function ttt() {
+       
+        var select = document.getElementsByName("rdotext");
+        var name1 = document.getElementById("player1").value;
+        var name2 = document.getElementById("player2").value;
+        var sflag=0;
+        if (select[0].checked)
+            flag = 0;
+        else if (select[1].checked)
+            flag = 1;
+        else {
+            sflag = 1;
+            alert("Please, Select Text..");
+        }
+        if (name1 == "" || name2=="") {
+            sflag = 1;
+            alert("Please, Enter Names..");
+        
+        }
+        if (sflag == 0) {
+            document.getElementById("ttt1").style.visibility = 'visible';
+            document.getElementById("start").disabled = true;
+        }
+        document.getElementById("prev").style.visibility = 'hidden';
+        document.getElementById("next").style.visibility = 'hidden';
+        document.getElementById("back").style.visibility = 'hidden';
+
+    }
+    function refresh() {
+        location.reload();
+    }
+    function history() {
+        if (gameNo != 0) {
+            document.getElementById("prev").style.visibility = 'visible';
+            document.getElementById("next").style.visibility = 'visible';
+            document.getElementById("back").style.visibility = 'visible';
+        }
+    }
+    function previous() {
+        if (gameNo > 0) {
+            document.getElementById("gameNo").innerHTML = '<span class="name1">Game Number:' + (parseInt(--gameNo) + parseInt(1)) + '</span>';
+            document.getElementById("ttt1").innerHTML = games[gameNo];
+            for (var iTmp = 1; iTmp <= 9; iTmp++)
+                document.getElementById("block" + iTmp).removeAttribute("onclick");
+        }
+
+    }
+    function next() {
+        if (gameNo < count-1) {
+            document.getElementById("gameNo").innerHTML = '<span class="name1">Game Number:' + (parseInt(++gameNo) + parseInt(1)) + '</span>';
+            document.getElementById("ttt1").innerHTML = games[gameNo];
+            for (var iTmp = 1; iTmp <=9;iTmp++ )
+                document.getElementById("block" + iTmp).removeAttribute("onclick");
+        }
+
+    }
+    function back() {
+        document.getElementById("ttt1").innerHTML = '<div class="row1"><span class="block" id="block1" onclick="change(this,0,0)"></span><span class="block" id="block2" onclick="change(this,0,1)"></span><span class="block" id="block3" onclick="change(this,0,2)"></span> </div> <div class="row2"> <span class="block" id="block4" onclick="change(this,1,0)"></span> <span class="block" id="block5" onclick="change(this,1,1)"></span>  <span class="block" id="block6" onclick="change(this,1,2)"></span>  </div>   <div class="row3">   <span class="block" id="block7" onclick="change(this,2,0)"></span> <span class="block" id="block8" onclick="change(this,2,1)"></span>   <span class="block" id="block9" onclick="change(this,2,2)"></span> </div>';
+        document.getElementById("ttt1").style.visibility = 'visible';
+        document.getElementById("gameNo").innerHTML = "";
+        for (var i = 0; i < 4; i++) {
+            var temp = games[i + 1];
+            games[i + 1] = games[i];
+            games[i] = temp;
+        }
+    }
+}
